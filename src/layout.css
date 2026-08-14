@@ -116,7 +116,10 @@
 .compact-hero .hero-character img{
   transform:translateY(-20%);
   transform-origin:center center;
+  filter:none;
+  mix-blend-mode:normal;
 }
+.compact-hero .hero-character:after{display:none}
 
 .header.fixed-header .nav-contact{color:#fff;cursor:pointer}
 @media(max-width:900px){
