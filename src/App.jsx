@@ -1,5 +1,5 @@
-import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, Mail, MapPin } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ArrowDown, ArrowUpRight, Mail, MapPin } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { experiences, profile, projects, projectStats } from './content'
 import './layout.css'
 import SpecularButton from './SpecularButton'
@@ -80,27 +80,50 @@ function HighlightedText({ text }) {
 
 function ProjectCarousel({ images, title }) {
   const [current, setCurrent] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const viewportRef = useRef(null)
 
   useEffect(() => {
-    if (paused || images.length < 2) return undefined
-    const timer = window.setInterval(() => setCurrent(index => (index + 1) % images.length), 4500)
-    return () => window.clearInterval(timer)
-  }, [images.length, paused])
+    const viewport = viewportRef.current
+    if (!viewport) return undefined
+    const updateCurrent = () => {
+      const center = viewport.scrollLeft + viewport.clientWidth / 2
+      const slides = [...viewport.querySelectorAll('img')]
+      const nearest = slides.reduce((best, slide, index) => {
+        const distance = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - center)
+        return distance < best.distance ? { index, distance } : best
+      }, { index: 0, distance: Infinity })
+      setCurrent(nearest.index)
+    }
+    const centerFirstImage = () => {
+      const first = viewport.querySelector('img')
+      if (first) viewport.scrollLeft = first.offsetLeft - (viewport.clientWidth - first.offsetWidth) / 2
+      updateCurrent()
+    }
+    viewport.addEventListener('scroll', updateCurrent, { passive: true })
+    const imagesInTrack = [...viewport.querySelectorAll('img')]
+    imagesInTrack.forEach(image => image.addEventListener('load', centerFirstImage, { once: true }))
+    window.requestAnimationFrame(centerFirstImage)
+    return () => {
+      viewport.removeEventListener('scroll', updateCurrent)
+      imagesInTrack.forEach(image => image.removeEventListener('load', centerFirstImage))
+    }
+  }, [images])
 
-  const showPrevious = () => setCurrent(index => (index - 1 + images.length) % images.length)
-  const showNext = () => setCurrent(index => (index + 1) % images.length)
+  const handleWheel = event => {
+    const viewport = viewportRef.current
+    if (!viewport || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return
+    event.preventDefault()
+    viewport.scrollLeft += event.deltaY
+  }
 
-  return <div className="project-carousel" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-    <div className="carousel-viewport">
-      {images.map((image, index) => <img className={index === current ? 'active' : ''} src={image} alt={`${title}项目图 ${index + 1}`} key={image}/>) }
-      <button className="carousel-control previous" type="button" onClick={showPrevious} aria-label="上一张图片"><ChevronLeft/></button>
-      <button className="carousel-control next" type="button" onClick={showNext} aria-label="下一张图片"><ChevronRight/></button>
+  return <div className="project-carousel">
+    <div className="carousel-viewport" ref={viewportRef} onWheel={handleWheel} tabIndex="0" aria-label={`${title} 横向连续图片画廊`}>
+      <div className="carousel-track">
+        {images.map((image, index) => <img src={image} alt={`${title} 项目图 ${index + 1}`} key={image}/>) }
+      </div>
       <span className="carousel-count">{String(current + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
     </div>
-    <div className="carousel-dots" aria-label="选择图片">
-      {images.map((image, index) => <button className={index === current ? 'active' : ''} type="button" onClick={() => setCurrent(index)} aria-label={`查看第 ${index + 1} 张图片`} aria-current={index === current ? 'true' : undefined} key={image}/>) }
-    </div>
+    <p className="carousel-hint">横向滑动 · 滚轮浏览</p>
   </div>
 }
 

@@ -154,18 +154,14 @@
 }
 .copy-toast.visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
-.project-carousel{width:min(760px,65%);margin-left:auto}
-.carousel-viewport{position:relative;height:min(72vh,760px);min-height:520px;overflow:hidden;border:1px solid #632044;background:#080509}
-.carousel-viewport>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s ease}
-.carousel-viewport>img.active{opacity:1}
-.carousel-control{position:absolute;top:50%;z-index:2;width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:50%;color:#fff;background:rgba(8,5,9,.7);backdrop-filter:blur(10px);transform:translateY(-50%);cursor:pointer}
-.carousel-control:hover{background:#d41432}.carousel-control.previous{left:14px}.carousel-control.next{right:14px}
+.project-carousel{width:100%;margin-left:auto}
+.carousel-viewport{position:relative;height:min(72vh,760px);min-height:520px;overflow-x:auto;overflow-y:hidden;border:1px solid #632044;background:#080509;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#d41432 #1a0a18;overscroll-behavior-x:contain}
+.carousel-track{display:flex;align-items:center;gap:0;width:max-content;min-width:100%;height:100%;padding-inline:50%}
+.carousel-track>img{display:block;flex:none;width:auto;max-width:min(78vw,960px);height:100%;object-fit:contain;scroll-snap-align:center;background:#080509}
 .carousel-count{position:absolute;right:14px;bottom:14px;z-index:2;padding:7px 10px;border-radius:999px;color:#fff;background:rgba(8,5,9,.72);font:12px 'Anton'}
-.carousel-dots{height:28px;display:flex;align-items:end;justify-content:center;gap:8px}
-.carousel-dots button{width:22px;height:4px;padding:0;border:0;border-radius:2px;background:#542044;cursor:pointer;transition:width .2s,background .2s}
-.carousel-dots button.active{width:36px;background:#f02b48}
-@media(max-width:900px){.project-carousel{width:100%}.carousel-viewport{height:min(70vh,680px);min-height:460px}}
-@media(max-width:520px){.carousel-viewport{height:68vh;min-height:420px}.carousel-control{width:38px;height:38px}.carousel-control.previous{left:8px}.carousel-control.next{right:8px}}
+.carousel-hint{margin:10px 0 0;text-align:right;color:#9c8197;font-size:11px;letter-spacing:1px}
+@media(max-width:900px){.carousel-viewport{height:min(70vh,680px);min-height:460px}.carousel-track>img{max-width:78vw}}
+@media(max-width:520px){.carousel-viewport{height:68vh;min-height:420px}.carousel-track>img{max-width:86vw}}
 .email-copy,.contact-email{cursor:copy}
 .email-copy.copied,.contact-email.copied{color:#fff}
 .project-gallery-screenshots{align-items:start}
