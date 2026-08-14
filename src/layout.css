@@ -174,13 +174,19 @@
 .carousel-frame figcaption{height:42px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid var(--gallery-line);color:#8e7387;font:9px/1 'Anton';letter-spacing:1.8px}
 .carousel-frame figcaption strong{color:#c5aaba;font:22px/1 'Anton';letter-spacing:0}
 .carousel-frame.is-current figcaption{border-top-color:var(--gallery-red);color:#f04b68}.carousel-frame.is-current figcaption strong{color:white}
-.carousel-status{display:grid;grid-template-columns:minmax(120px,1fr) auto auto;align-items:center;gap:22px;margin-top:12px}
-.carousel-progress{height:2px;background:#32122a;overflow:hidden}.carousel-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--gallery-violet),var(--gallery-red));transition:width .35s ease}
+.carousel-status{display:grid;grid-template-columns:minmax(180px,1fr) auto auto;align-items:center;gap:22px;margin-top:14px}
+.carousel-scrubber{display:flex;align-items:center;height:34px;cursor:ew-resize}
+.carousel-scrubber input{width:100%;height:22px;margin:0;appearance:none;-webkit-appearance:none;background:transparent;cursor:ew-resize}
+.carousel-scrubber input::-webkit-slider-runnable-track{height:6px;border:1px solid #542044;background:linear-gradient(90deg,var(--gallery-red) 0 var(--progress),#25101f var(--progress) 100%)}
+.carousel-scrubber input::-moz-range-track{height:6px;border:1px solid #542044;background:#25101f}.carousel-scrubber input::-moz-range-progress{height:6px;background:var(--gallery-red)}
+.carousel-scrubber input::-webkit-slider-thumb{width:30px;height:22px;margin-top:-9px;appearance:none;-webkit-appearance:none;border:2px solid #f24b68;border-radius:2px;background:#0b050b;box-shadow:0 0 0 4px rgba(227,25,55,.16)}
+.carousel-scrubber input::-moz-range-thumb{width:26px;height:18px;border:2px solid #f24b68;border-radius:2px;background:#0b050b;box-shadow:0 0 0 4px rgba(227,25,55,.16)}
+.carousel-scrubber input:focus-visible{outline:2px solid #fff;outline-offset:5px}
 .carousel-count{color:#775f71;font:12px 'Anton'}.carousel-count b{color:#fff;font-size:22px;font-weight:400}
 .carousel-hint{margin:0;color:#9c8197;font-size:10px;letter-spacing:1px}
 @media(max-width:900px){.carousel-viewport{height:min(70vh,680px);min-height:500px}.carousel-frame{width:min(58vw,320px)}.carousel-gallery-head span:last-child{display:none}}
 @media(max-width:520px){.carousel-viewport{height:68vh;min-height:450px}.carousel-frame{width:74vw;height:86%}.carousel-status{grid-template-columns:1fr auto}.carousel-hint{display:none}}
-@media(prefers-reduced-motion:reduce){.carousel-frame,.carousel-progress span{transition:none}}
+@media(prefers-reduced-motion:reduce){.carousel-frame{transition:none}}
 .email-copy,.contact-email{cursor:copy}
 .email-copy.copied,.contact-email.copied{color:#fff}
 .project-gallery-screenshots{align-items:start}

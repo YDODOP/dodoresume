@@ -80,12 +80,15 @@ function HighlightedText({ text }) {
 
 function ProjectCarousel({ images, title }) {
   const [current, setCurrent] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const viewportRef = useRef(null)
 
   useEffect(() => {
     const viewport = viewportRef.current
     if (!viewport) return undefined
     const updateCurrent = () => {
+      const maxScroll = viewport.scrollWidth - viewport.clientWidth
+      setScrollProgress(maxScroll > 0 ? (viewport.scrollLeft / maxScroll) * 100 : 0)
       const center = viewport.scrollLeft + viewport.clientWidth / 2
       const slides = [...viewport.querySelectorAll('.carousel-frame')]
       const nearest = slides.reduce((best, slide, index) => {
@@ -109,19 +112,19 @@ function ProjectCarousel({ images, title }) {
     }
   }, [images])
 
-  const handleWheel = event => {
+  const handleSliderChange = event => {
     const viewport = viewportRef.current
-    if (!viewport || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return
-    event.preventDefault()
-    viewport.scrollLeft += event.deltaY
+    if (!viewport) return
+    const progress = Number(event.target.value)
+    viewport.scrollLeft = (progress / 100) * (viewport.scrollWidth - viewport.clientWidth)
   }
 
   return <div className="project-carousel">
     <div className="carousel-gallery-head" aria-hidden="true">
       <span>PROJECT IMAGE ARCHIVE</span>
-      <span>SCROLL TO REVIEW</span>
+      <span>DRAG THE CONTROL BELOW</span>
     </div>
-    <div className="carousel-viewport" ref={viewportRef} onWheel={handleWheel} tabIndex="0" aria-label={`${title} 横向连续图片画廊`}>
+    <div className="carousel-viewport" ref={viewportRef} tabIndex="0" aria-label={`${title} 横向连续图片画廊`}>
       <span className="carousel-focus-line" aria-hidden="true"/>
       <div className="carousel-track">
         {images.map((image, index) => <figure className={`carousel-frame ${index === current ? 'is-current' : ''}`} key={image}>
@@ -136,8 +139,11 @@ function ProjectCarousel({ images, title }) {
       </div>
     </div>
     <div className="carousel-status">
-      <div className="carousel-progress" aria-hidden="true"><span style={{width: `${((current + 1) / images.length) * 100}%`}}/></div>
-      <p className="carousel-hint">横向滑动 · 滚轮浏览</p>
+      <label className="carousel-scrubber">
+        <span className="sr-only">拖动查看项目照片</span>
+        <input type="range" min="0" max="100" step="0.1" value={scrollProgress} onChange={handleSliderChange} aria-label="拖动查看项目照片" style={{'--progress': `${scrollProgress}%`}}/>
+      </label>
+      <p className="carousel-hint">拖动控制条浏览</p>
       <span className="carousel-count"><b>{String(current + 1).padStart(2, '0')}</b> / {String(images.length).padStart(2, '0')}</span>
     </div>
   </div>
