@@ -87,7 +87,7 @@ function ProjectCarousel({ images, title }) {
     if (!viewport) return undefined
     const updateCurrent = () => {
       const center = viewport.scrollLeft + viewport.clientWidth / 2
-      const slides = [...viewport.querySelectorAll('img')]
+      const slides = [...viewport.querySelectorAll('.carousel-frame')]
       const nearest = slides.reduce((best, slide, index) => {
         const distance = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - center)
         return distance < best.distance ? { index, distance } : best
@@ -95,7 +95,7 @@ function ProjectCarousel({ images, title }) {
       setCurrent(nearest.index)
     }
     const centerFirstImage = () => {
-      const first = viewport.querySelector('img')
+      const first = viewport.querySelector('.carousel-frame')
       if (first) viewport.scrollLeft = first.offsetLeft - (viewport.clientWidth - first.offsetWidth) / 2
       updateCurrent()
     }
@@ -117,13 +117,29 @@ function ProjectCarousel({ images, title }) {
   }
 
   return <div className="project-carousel">
-    <div className="carousel-viewport" ref={viewportRef} onWheel={handleWheel} tabIndex="0" aria-label={`${title} 横向连续图片画廊`}>
-      <div className="carousel-track">
-        {images.map((image, index) => <img src={image} alt={`${title} 项目图 ${index + 1}`} key={image}/>) }
-      </div>
-      <span className="carousel-count">{String(current + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
+    <div className="carousel-gallery-head" aria-hidden="true">
+      <span>PROJECT IMAGE ARCHIVE</span>
+      <span>SCROLL TO REVIEW</span>
     </div>
-    <p className="carousel-hint">横向滑动 · 滚轮浏览</p>
+    <div className="carousel-viewport" ref={viewportRef} onWheel={handleWheel} tabIndex="0" aria-label={`${title} 横向连续图片画廊`}>
+      <span className="carousel-focus-line" aria-hidden="true"/>
+      <div className="carousel-track">
+        {images.map((image, index) => <figure className={`carousel-frame ${index === current ? 'is-current' : ''}`} key={image}>
+          <div className="carousel-photo">
+            <img src={image} alt={`${title} 项目图 ${index + 1}`}/>
+          </div>
+          <figcaption>
+            <span>FRAME</span>
+            <strong>{String(index + 1).padStart(2, '0')}</strong>
+          </figcaption>
+        </figure>) }
+      </div>
+    </div>
+    <div className="carousel-status">
+      <div className="carousel-progress" aria-hidden="true"><span style={{width: `${((current + 1) / images.length) * 100}%`}}/></div>
+      <p className="carousel-hint">横向滑动 · 滚轮浏览</p>
+      <span className="carousel-count"><b>{String(current + 1).padStart(2, '0')}</b> / {String(images.length).padStart(2, '0')}</span>
+    </div>
   </div>
 }
 
