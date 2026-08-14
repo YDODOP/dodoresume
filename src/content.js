@@ -1,35 +1,60 @@
+const imagePath = file => `${import.meta.env.BASE_URL}images/${file}`
+
 export const profile = {
-  name: '杨东铭',
-  role: 'AI DESIGNER / ROBOTICS STUDENT',
-  intro: '重庆大学机器人工程专业本科生，关注生成式 AI、视觉叙事与智能产品体验。我擅长把复杂信息整理成清晰的视觉系统，也在真实项目中持续训练策划、协作与落地能力。',
+  name: 'Young',
+  role: '项目负责人 / 运营实习生',
+  intro: '拥有多个项目从 0 到 1 的策划与带队经验，曾统筹校园赛事 IP、管理跨职能执行团队，并推动标准化流程落地。具备工业机器人企业运营与数据实习经历，能够快速理解业务、协调资源并推进项目交付。',
   email: '2714388954@qq.com',
   location: '重庆 / 佛山 · 可参与远程合作',
 }
 
-export const stats = [
-  ['44+', '团队管理规模'],
-  ['6.5K', '项目资金支持'],
-  ['19', '支队伍落地执行'],
-  ['TOP 3', '全国机器人赛事'],
+export const projectStats = [
+  ['45人', '核心执行团队'],
+  ['9.5K', '项目资金支持'],
+  ['19支', '参赛队伍'],
+  ['600+', '参与人数'],
 ]
 
 export const projects = [
   {
-    number: '01', type: 'IP INCUBATION · 2024—2025', title: '重庆事新辰',
-    description: '面向重庆高校用户完成需求洞察、足球赛事 IP 策划和执行体系搭建，从 0 到 1 推动品牌赛事孵化。项目获得校级官方背书及 6500 元资金支持。',
-    image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1800&q=88',
+    number: '01', type: '校园品牌孵化 · 2024—2025', title: '校园品牌孵化',
+    description: '针对校内足球赛事供给不足的问题，从需求洞察、方案策划到团队执行，主导完成一个覆盖全校的校园足球赛事 IP。',
+    highlights: [
+      ['IP 孵化与资源争取', '敏锐洞察校内“足球赛事断层”的用户痛点，主导发起全新足球赛事 IP。成功主笔并推进方案，通过校级 SQIP 项目审批，获得校级官方背书及 9500 元资金支持，实现从 0 到 1 的品牌赛事孵化。'],
+      ['规模化扩张与增长', '搭建并管理一支 45 人的核心执行团队，历时 1 个月成功组织 19 支队伍参赛。赛事由单一年级扩展至全校 16 个学院，累计核心参与及到场人数突破 500 人。'],
+      ['中台能力构建', '主导制定涵盖赛制流程、裁判标准、紧急预案在内的全链路标准化赛事 SOP，降低协作成本，确保赛事能够快速复刻和稳定执行。'],
+    ],
+    images: [
+      imagePath('project-1-01.jpg'),
+      imagePath('project-1-02.jpg'),
+      imagePath('project-1-03.jpg'),
+      imagePath('project-1-04.jpg'),
+      imagePath('project-1-05.png'),
+      imagePath('project-1-06.png'),
+    ],
     color: '#f04b32',
   },
   {
-    number: '02', type: 'SYSTEM DESIGN · 2024—2025', title: '19-TEAM SYSTEM',
-    description: '制定标准化赛事 SOP、搭建 45 人核心执行团队，并为 19 支队伍建立任务、赛制与内容运营流程，实现快速复制和稳定交付。',
-    image: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=1800&q=88',
-    color: '#8b45ff',
+    number: '02', type: 'AICoding · 全栈开发 · 2025', title: '足协赛事管理小程序',
+    description: '参考懂球帝 App 的赛事信息组织方式，立足“重庆大学校园足球生态”，围绕赛事运营场景进行本地化设计与开发。独立使用“Codex 辅助”完成产品设计、代码开发、问题排查与功能迭代， “独立打通”前端页面、后端服务与数据存储。',
+    highlights: [
+      ['AI 辅助全栈开发', '基于 AICoding 工作流，使用“Codex 辅助”推进产品设计、代码开发、问题排查与功能迭代，独立完成前端、后端及数据层的协同开发。'],
+      ['本地化赛事资源整合', '参考懂球帝 App 的内容组织逻辑，结合重庆大学校园足球环境与社团运营特点，搭建适配校内赛事的统一信息入口。'],
+      ['赛事运营闭环', '集成比赛数据统计、赛事新闻发布和用户反馈收集等核心功能，并充分考虑“社团成员的日常维护成本与实际运营难度”，实现赛事信息的统一管理与高效流转。'],
+    ],
+    images: [
+      imagePath('project-2-01.jpg'),
+      imagePath('project-2-02.jpg'),
+    ],
+    color: '#e99a50',
   },
   {
-    number: '03', type: 'TEAM LEADERSHIP · 2024—2025', title: 'ROBOCUP TEAM',
+    number: '03', type: '团队管理 · 2024—2025', title: '机器人足球队',
     description: '负责 44 人足球机器人队的日常训练规划、梯队建设与团队协作，带队参加全国大学生五人制足球机器人赛事并获得全国第三名。',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1800&q=88',
+    images: [
+      'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1000&q=84',
+      'https://images.unsplash.com/photo-1561144257-e32e8efc6c4f?auto=format&fit=crop&w=1000&q=84',
+    ],
     color: '#ff2fab',
   },
 ]
@@ -38,15 +63,28 @@ export const experiences = [
   {
     period: '2023.09 — 2027.09', title: '重庆大学', role: '机器人工程 · 本科',
     description: '学习系统工程、数字电子技术基础、Python、信号与系统、模拟电子技术及自动控制原理。',
+    category: 'education',
   },
   {
-    period: '2025.07 — 现在', title: '广州瑞松智能机器人有限公司', role: '运营 / 数据助理实习生',
-    description: '参与工业机器人项目的数据标准化、清洗与结构化处理，并协助梳理内部运营管理系统和制造业务流程。',
-    current: true,
+    period: '2026.07.13 — 2026.08.22', title: '华为云', role: 'BD 实习生 · 长安 AI Coding 项目商务推进',
+    description: '协助客户经理跟进长安 AI Coding 合作项目，参与客户对接、PoC 推进、投标资料准备及项目复盘等工作，在实际项目中理解政企客户经理如何协调内部资源、梳理推进优先级并跟踪事项落地。',
+    highlights: [
+      ['客户与内部资源匹配', '根据待对接客户的角色和具体诉求，协助判断应由项目组中的客户经理、解决方案人员或技术人员参与沟通，提前整理对接背景及所需材料，减少信息传递偏差。'],
+      ['决策链路梳理', '参与项目专项分析会议，系统梳理客户决策链路与关键角色，识别核心决策人，为后续客户触达和项目推进提供依据。'],
+      ['客户对接支持', '协助客户经理安排拜访时间、沟通场景和参会人员，记录客户需求、关键结论及待办事项；会后输出标准化客户拜访纪要，同步相关成员并持续跟踪后续处理进度。'],
+      ['PoC 与投标支持', '配合项目组推进 PoC 前期准备和过程沟通，整理、检查投标配套资料，协助确认材料完整性，为项目有序推进提供基础支持。'],
+    ],
+    category: 'internship',
+  },
+  {
+    period: '2025.07.12 — 2025.08.20', title: '广州瑞松智能机器人有限公司', role: '运营 / 数据助理实习生',
+    description: '深入工业机器人项目一线，使用办公软件处理海量复杂数据，梳理并输出结构化机器人参数库；同时参与内部运营管理系统的数据维护与项目推进，理解大型制造企业的标准化体系、运营逻辑与业务协作流程。',
+    category: 'internship',
   },
   {
     period: '2024.01 — 2024.02', title: '美国德克萨斯大学访学', role: '国际交流学生',
     description: '在全英文环境中参与多元文化背景下的课程、研讨与团队交流，拓展国际化视野。',
+    category: 'exchange',
   },
 ]
 

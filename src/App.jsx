@@ -1,87 +1,175 @@
-import { ArrowDown, ArrowUpRight, Mail, MapPin, Menu, X } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, Mail, MapPin } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { experiences, profile, projects, stats, strengths } from './content'
+import { experiences, profile, projects, projectStats } from './content'
+import './layout.css'
+import SpecularButton from './SpecularButton'
 
-const nav = [['关于', 'about'], ['项目', 'work'], ['经历', 'experience'], ['优势', 'strengths']]
+const nav = [['简介', 'about'], ['项目', 'work'], ['实习', 'internship']]
 
 function Header() {
-  const [open, setOpen] = useState(false)
-  return <header className="header">
-    <a className="logo" href="#top" aria-label="回到首页"><b>YD</b><span>AI DESIGN<br/>PORTFOLIO</span></a>
-    <nav className={open ? 'nav open' : 'nav'}>
-      {nav.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
-      <a className="nav-contact" href={`mailto:${profile.email}`}>联系我 <ArrowUpRight size={17}/></a>
+  const [activeSection, setActiveSection] = useState('about')
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    const sections = nav.map(([, id]) => document.getElementById(id)).filter(Boolean)
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+      if (visible[0]) setActiveSection(visible[0].target.id)
+    }, { rootMargin: '-58px 0px -55% 0px', threshold: [0, .2, .5] })
+    sections.forEach(section => observer.observe(section))
+    return () => observer.disconnect()
+  }, [])
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email)
+    } catch {
+      const input = document.createElement('textarea')
+      input.value = profile.email
+      input.style.position = 'fixed'
+      input.style.opacity = '0'
+      document.body.appendChild(input)
+      input.select()
+      document.execCommand('copy')
+      input.remove()
+    }
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1800)
+  }
+
+  return <><header className="header fixed-header">
+    <a className="logo" href="#top" aria-label="回到首页"><b>Young</b></a>
+    <nav className="nav fixed-nav">
+      {nav.map(([label, id]) => <a className={activeSection === id ? 'active' : ''} aria-current={activeSection === id ? 'page' : undefined} key={id} href={`#${id}`}>{label}</a>)}
     </nav>
-    <button className="menu" onClick={() => setOpen(!open)} aria-label={open ? '关闭菜单' : '打开菜单'}>{open ? <X/> : <Menu/>}</button>
-  </header>
+    <SpecularButton className="nav-contact" onClick={copyEmail} data-email={profile.email} aria-label={`复制邮箱：${profile.email}`} radius={999} tint="#d41432" tintOpacity={0.86} blur={14} lineColor="#ffffff" baseColor="#7428a8" intensity={1.45} shineSize={12} shineFade={42} thickness={1.2} proximity={220}><span className="nav-contact-text">联系我</span><ArrowUpRight size={17}/></SpecularButton>
+  </header><div className={`copy-toast ${copied ? 'visible' : ''}`} role="status" aria-live="polite">已复制邮箱</div></>
+}
+
+async function copyEmailValue(email) {
+  try {
+    await navigator.clipboard.writeText(email)
+  } catch {
+    const input = document.createElement('textarea')
+    input.value = email
+    input.style.position = 'fixed'
+    input.style.opacity = '0'
+    document.body.appendChild(input)
+    input.select()
+    document.execCommand('copy')
+    input.remove()
+  }
+}
+
+function CopyEmailLink({ email, children, className = '' }) {
+  const [copied, setCopied] = useState(false)
+  const handleClick = async event => {
+    event.preventDefault()
+    await copyEmailValue(email)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1800)
+  }
+  return <a className={`${className}${copied ? ' copied' : ''}`} href={`mailto:${email}`} onClick={handleClick} title={copied ? '已复制邮箱' : '点击复制邮箱'}>{copied ? '已复制邮箱' : children}</a>
+}
+
+function HighlightedText({ text }) {
+  const phrases = ['全新足球赛事 IP', '45 人的核心执行团队', '全链路标准化赛事 SOP', '“重庆大学校园足球生态”', '“Codex 辅助”', '“独立打通”', '“社团成员的日常维护成本与实际运营难度”']
+  const pattern = new RegExp(`(${phrases.join('|')})`, 'g')
+  return text.split(pattern).map((part, index) => phrases.includes(part) ? <strong key={`${part}-${index}`}>{part}</strong> : part)
+}
+
+function ProjectCarousel({ images, title }) {
+  const [current, setCurrent] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  useEffect(() => {
+    if (paused || images.length < 2) return undefined
+    const timer = window.setInterval(() => setCurrent(index => (index + 1) % images.length), 4500)
+    return () => window.clearInterval(timer)
+  }, [images.length, paused])
+
+  const showPrevious = () => setCurrent(index => (index - 1 + images.length) % images.length)
+  const showNext = () => setCurrent(index => (index + 1) % images.length)
+
+  return <div className="project-carousel" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <div className="carousel-viewport">
+      {images.map((image, index) => <img className={index === current ? 'active' : ''} src={image} alt={`${title}项目图 ${index + 1}`} key={image}/>) }
+      <button className="carousel-control previous" type="button" onClick={showPrevious} aria-label="上一张图片"><ChevronLeft/></button>
+      <button className="carousel-control next" type="button" onClick={showNext} aria-label="下一张图片"><ChevronRight/></button>
+      <span className="carousel-count">{String(current + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
+    </div>
+    <div className="carousel-dots" aria-label="选择图片">
+      {images.map((image, index) => <button className={index === current ? 'active' : ''} type="button" onClick={() => setCurrent(index)} aria-label={`查看第 ${index + 1} 张图片`} aria-current={index === current ? 'true' : undefined} key={image}/>) }
+    </div>
+  </div>
 }
 
 function App() {
   useEffect(() => {
     const nodes = document.querySelectorAll('.reveal')
-    const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')), { threshold: .12 })
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible')), { threshold: .1 })
     nodes.forEach(node => observer.observe(node))
     return () => observer.disconnect()
   }, [])
 
+  const internships = experiences.filter(item => item.category === 'internship')
+
   return <main id="top">
-    <section className="hero">
-      <video className="hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1633412802994-5c058f151b66?auto=format&fit=crop&w=2200&q=90">
-        <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_25fps.mp4" type="video/mp4" />
-      </video>
-      <div className="hero-shade"/><Header />
-      <div className="hero-content">
-        <p className="eyebrow"><span/> YANG DONGMING · 2026</p>
-        <h1>IDEAS WITH<br/><i>SUPER</i> POWERS.</h1>
-        <div className="hero-bottom">
-          <p>AI 驱动的视觉设计、系统思维<br/>与新叙事体验。</p>
-          <a className="round-link" href="#work" aria-label="查看项目"><ArrowDown/></a>
-        </div>
+    <Header />
+    <section className="hero compact-hero">
+      <div className="speed-lines"/><div className="comic-dots"/>
+      <div className="hero-name" aria-hidden="true">杨东锫</div>
+      <div className="hero-copy">
+        <p className="eyebrow"><span/> 个人作品集 · 2026</p>
+        <h1>杨东锫</h1>
+        <p>多个项目的负责人<br/>项目统筹 × 团队管理 × 运营实践</p>
       </div>
-      <div className="hero-tag">BASED IN CHINA <span>✦</span> OPEN TO WORK</div>
+      <div className="hero-character">
+        <div className="character-shadow"/>
+        <img src={`${import.meta.env.BASE_URL}images/hero-young.jpg`} alt="Young 的个人照片"/>
+      </div>
+      <div className="hero-resume-bar">
+        <div><small>身份</small><strong>项目负责人 / 运营实习生</strong></div>
+        <div><small>所在地</small><strong>重庆 / 佛山</strong></div>
+        <div><small>当前状态</small><strong>实习中 · 接受创意合作</strong></div>
+        <a className="round-link" href="#about" aria-label="继续浏览"><ArrowDown/></a>
+      </div>
     </section>
 
-    <section className="about section" id="about">
-      <div className="section-head reveal"><span>01 / ABOUT</span><p>从机器人的严谨逻辑出发<br/>设计有冲击力的视觉体验</p></div>
-      <div className="about-grid">
-        <div className="portrait reveal"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1100&q=90" alt="个人形象占位图"/><span>PORTRAIT<br/>TO BE UPDATED</span></div>
-        <div className="about-copy reveal">
-          <p className="kicker">HELLO, I'M</p><h2>{profile.name}</h2><h3>{profile.role}</h3>
-          <p className="intro">{profile.intro}</p>
-          <div className="details"><a href={`mailto:${profile.email}`}><Mail/> {profile.email}</a><p><MapPin/> {profile.location}</p></div>
-        </div>
+    <section className="about section compact-section" id="about">
+      <div className="section-title reveal"><span>01 / 简介</span><h2>带领团队把想法落地，<br/>在真实业务中积累经验。</h2></div>
+      <div className="intro-layout reveal">
+        <div><p className="intro-name">杨东锫 <small>Young</small></p><p className="intro-role">{profile.role}</p></div>
+          <div><p className="intro">{profile.intro}</p><div className="details"><CopyEmailLink email={profile.email} className="email-copy"><Mail/> {profile.email}</CopyEmailLink><p><MapPin/> {profile.location}</p></div></div>
       </div>
-      <div className="stats reveal">{stats.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
+      <div className="education-line reveal"><span>教育背景</span><strong>重庆大学 · 机器人工程本科</strong><p>2023.09 — 2027.09</p></div>
     </section>
 
-    <section className="work section" id="work">
-      <div className="section-head light reveal"><span>02 / SELECTED WORK</span><h2>PROJECTS THAT<br/>MAKE SOME <i>NOISE.</i></h2></div>
-      <div className="project-list">{projects.map((p, index) => <article className="project reveal" key={p.title}>
-        <div className="project-image"><img src={p.image} alt={p.title}/><span style={{background:p.color}}>{p.number}</span></div>
-        <div className="project-meta"><div><small>{p.type}</small><h3>{p.title}</h3></div><p>{p.description}</p><button aria-label={`查看 ${p.title}`}><ArrowUpRight/></button></div>
+    <section className="work section compact-section" id="work">
+      <div className="section-title reveal"><span>02 / 项目</span><h2>用结果讲述项目，<br/>用画面补充细节。</h2></div>
+      <div className="project-list compact-projects">{projects.map((project, projectIndex) => <article className={`project reveal ${projectIndex === 0 ? 'feature-project' : ''}`} key={project.title}>
+        <div className="project-info">
+          <span className="project-number" style={{color: project.color}}>{project.number}</span>
+          <div><small>{project.type}</small><h3>{project.title}</h3><p><HighlightedText text={project.description}/></p></div>
+        </div>
+        {project.highlights && <div className="project-highlights">{project.highlights.map(([title, text]) => <div key={title}><h4>{title}</h4><p><HighlightedText text={text}/></p></div>)}</div>}
+        {projectIndex === 0 ? <ProjectCarousel images={project.images} title={project.title}/> : <div className={`project-gallery ${projectIndex === 1 ? 'project-gallery-screenshots' : ''}`}>{project.images.map((image, index) => <img src={image} alt={`${project.title}项目图 ${index + 1}`} key={image}/>)}</div>}
+        {projectIndex === 0 && <div className="project-stats">{projectStats.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>}
       </article>)}</div>
     </section>
 
-    <section className="experience section" id="experience">
-      <div className="section-head reveal"><span>03 / EXPERIENCE</span><h2>THE STORY<br/>SO <i>FAR.</i></h2></div>
-      <div className="timeline">{experiences.map(item => <article className="timeline-item reveal" key={item.title}>
-        <p>{item.period}</p>
-        <div><h3>{item.title}{item.current && <span>NOW</span>}</h3><strong>{item.role}</strong><p>{item.description}</p></div>
-        <ArrowUpRight/>
+    <section className="experience section compact-section" id="internship">
+      <div className="section-title reveal"><span>03 / 实习</span><h2>深入真实业务现场，<br/>积累运营与数据实践经验。</h2></div>
+      <div className="internship-list">{internships.map((internship, index) => <article className="internship-card reveal" key={`${internship.title}-${internship.period}`}>
+        <div>{index === 0 && <span className="current-tag">重点经历</span>}<p>{internship.period}</p></div>
+        <div><h3>{internship.title}</h3><strong>{internship.role}</strong><p>{internship.description}</p>{internship.highlights && <div className="internship-highlights">{internship.highlights.map(([title, text]) => <div key={title}><h4>{title}</h4><p>{text}</p></div>)}</div>}</div>
       </article>)}</div>
     </section>
 
-    <section className="strengths section" id="strengths">
-      <div className="section-head reveal"><span>04 / WHY ME</span><h2>CREATIVE<br/>BY <i>DESIGN.</i></h2></div>
-      <div className="strength-grid">{strengths.map(([n, title, body]) => <article className="strength-card reveal" key={n}><span>{n}</span><h3>{title}</h3><p>{body}</p><ArrowUpRight/></article>)}</div>
-    </section>
-
-    <footer className="contact" id="contact">
-      <div className="contact-burst">LET'S<br/><i>TALK!</i></div>
-      <p className="eyebrow"><span/> AVAILABLE FOR CREATIVE COLLABORATION</p>
-      <h2>HAVE A BOLD IDEA?<br/>LET'S MAKE IT <i>REAL.</i></h2>
-      <a href={`mailto:${profile.email}`}>{profile.email} <ArrowUpRight/></a>
-      <div className="footer-line"><span>© 2026 {profile.name}</span><span>AI DESIGNER · PORTFOLIO</span><a href="#top">BACK TO TOP ↑</a></div>
+    <footer className="contact compact-contact">
+      <p>保持联系</p><h2>有合适的项目，<br/>欢迎和我聊聊。</h2>
+      <CopyEmailLink email={profile.email} className="contact-email">{profile.email} <ArrowUpRight/></CopyEmailLink>
+      <div className="footer-line"><span>© 2026 {profile.name}</span><span>个人作品集</span><a href="#top">返回顶部 ↑</a></div>
     </footer>
   </main>
 }
