@@ -4,7 +4,7 @@ import { experiences, profile, projects, projectStats } from './content'
 import './layout.css'
 import SpecularButton from './SpecularButton'
 
-const miniAppImages = ['miniapp-01.jpg', 'miniapp-02.jpg', 'miniapp-03.jpg', 'miniapp-04.jpg', 'miniapp-05.jpg'].map(file => `${import.meta.env.BASE_URL}images/${file}`)
+const miniAppImages = ['miniapp-01.jpg', 'miniapp-02.jpg', 'miniapp-03.jpg', 'miniapp-04.jpg', 'miniapp-05.jpg', 'miniapp-06.jpg', 'miniapp-07.jpg'].map(file => `${import.meta.env.BASE_URL}images/${file}`)
 
 const nav = [['简介', 'about'], ['项目', 'work'], ['实习', 'internship']]
 
