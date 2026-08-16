@@ -193,8 +193,6 @@
 @media(prefers-reduced-motion:reduce){.carousel-frame{transition:none}}
 .email-copy,.contact-email{cursor:copy}
 .email-copy.copied,.contact-email.copied{color:#fff}
-.project-gallery-screenshots{align-items:start}
-.project-gallery-screenshots img{height:auto;aspect-ratio:1280/2769;object-fit:contain;background:#080509}
 .miniapp-archive{grid-column:1 / -1;margin-top:28px;padding-top:26px;border-top:1px solid #542044}
 .miniapp-archive-label{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;color:#f04b68;font:11px 'Anton';letter-spacing:2px}
 .miniapp-archive-label strong{color:#eee8ef;font:700 18px 'Noto Sans SC';letter-spacing:0}
