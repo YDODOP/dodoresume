@@ -118,7 +118,11 @@
   transform-origin:center center;
   filter:none;
   mix-blend-mode:normal;
+  position:relative;
+  z-index:2;
 }
+.compact-hero .hero-character:before{z-index:0}
+.compact-hero .character-shadow{z-index:0}
 .compact-hero .hero-character:after{display:none}
 
 .header.fixed-header .nav-contact{color:#fff;cursor:pointer}
