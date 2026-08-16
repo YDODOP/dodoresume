@@ -195,6 +195,11 @@
 .email-copy.copied,.contact-email.copied{color:#fff}
 .project-gallery-screenshots{align-items:start}
 .project-gallery-screenshots img{height:auto;aspect-ratio:1280/2769;object-fit:contain;background:#080509}
+.miniapp-archive{grid-column:1 / -1;margin-top:28px;padding-top:26px;border-top:1px solid #542044}
+.miniapp-archive-label{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;color:#f04b68;font:11px 'Anton';letter-spacing:2px}
+.miniapp-archive-label strong{color:#eee8ef;font:700 18px 'Noto Sans SC';letter-spacing:0}
+.miniapp-archive .carousel-viewport{height:min(68vh,680px);min-height:480px}
+@media(max-width:900px){.miniapp-archive{margin-top:16px}.miniapp-archive-label{display:block}.miniapp-archive-label strong{display:block;margin-top:8px}.miniapp-archive .carousel-viewport{height:min(68vh,600px);min-height:440px}}
 .internship-list{display:grid;gap:24px}
 .internship-highlights{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
 .internship-highlights>div{padding:18px 20px;border:1px solid rgba(242,75,104,.3);border-radius:18px;background:rgba(8,5,9,.45)}

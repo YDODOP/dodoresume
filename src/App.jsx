@@ -4,6 +4,8 @@ import { experiences, profile, projects, projectStats } from './content'
 import './layout.css'
 import SpecularButton from './SpecularButton'
 
+const miniAppImages = ['miniapp-01.jpg', 'miniapp-02.jpg', 'miniapp-03.jpg', 'miniapp-04.jpg', 'miniapp-05.jpg'].map(file => `${import.meta.env.BASE_URL}images/${file}`)
+
 const nav = [['简介', 'about'], ['项目', 'work'], ['实习', 'internship']]
 
 function Header() {
@@ -199,6 +201,7 @@ function App() {
         </div>
         {project.highlights && <div className="project-highlights">{project.highlights.map(([title, text]) => <div key={title}><h4>{title}</h4><p><HighlightedText text={text}/></p></div>)}</div>}
         {projectIndex === 0 ? <ProjectCarousel images={project.images} title={project.title}/> : <div className={`project-gallery ${projectIndex === 1 ? 'project-gallery-screenshots' : ''}`}>{project.images.map((image, index) => <img src={image} alt={`${project.title}项目图 ${index + 1}`} key={image}/>)}</div>}
+        {projectIndex === 1 && <div className="miniapp-archive"><div className="miniapp-archive-label"><span>05 / PRODUCT INTERFACE</span><strong>小程序产品界面档案</strong></div><ProjectCarousel images={miniAppImages} title="小程序产品界面"/></div>}
         {projectIndex === 0 && <div className="project-stats">{projectStats.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>}
       </article>)}</div>
     </section>
