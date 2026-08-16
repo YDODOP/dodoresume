@@ -8,6 +8,43 @@ const miniAppImages = ['miniapp-01.jpg', 'miniapp-02.jpg', 'miniapp-03.jpg', 'mi
 
 const nav = [['简介', 'about'], ['项目', 'work'], ['实习', 'internship']]
 
+function useSpecularEdges() {
+  useEffect(() => {
+    const selector = '.project-highlights, .project-stats, .internship-card, .internship-highlights > div, .carousel-photo'
+    const targets = [...document.querySelectorAll(selector)]
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!targets.length || reducedMotion) return undefined
+
+    let frame = 0
+    let pointerX = -1000
+    let pointerY = -1000
+    const render = () => {
+      frame = 0
+      targets.forEach(target => {
+        const rect = target.getBoundingClientRect()
+        const dx = Math.max(rect.left - pointerX, 0, pointerX - rect.right)
+        const dy = Math.max(rect.top - pointerY, 0, pointerY - rect.bottom)
+        const distance = Math.hypot(dx, dy)
+        const proximity = Math.max(0, 1 - distance / 240)
+        const eased = proximity * proximity * (3 - 2 * proximity)
+        target.style.setProperty('--edge-x', `${pointerX - rect.left}px`)
+        target.style.setProperty('--edge-y', `${pointerY - rect.top}px`)
+        target.style.setProperty('--edge-alpha', `${0.2 + eased * 0.8}`)
+      })
+    }
+    const onPointerMove = event => {
+      pointerX = event.clientX
+      pointerY = event.clientY
+      if (!frame) frame = window.requestAnimationFrame(render)
+    }
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [])
+}
+
 function Header() {
   const [activeSection, setActiveSection] = useState('about')
   const [copied, setCopied] = useState(false)
@@ -152,6 +189,8 @@ function ProjectCarousel({ images, title }) {
 }
 
 function App() {
+  useSpecularEdges()
+
   useEffect(() => {
     const nodes = document.querySelectorAll('.reveal')
     const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible')), { threshold: .1 })
