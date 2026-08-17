@@ -203,6 +203,8 @@ function App() {
   return <main id="top">
     <Header />
     <section className="hero compact-hero">
+      <video className="hero-video" autoPlay muted loop playsInline preload="auto" aria-hidden="true" src={`${import.meta.env.BASE_URL}media/hero-bg.mp4`}/>
+      <div className="hero-glass" aria-hidden="true"/>
       <div className="speed-lines"/><div className="comic-dots"/>
       <div className="hero-name" aria-hidden="true">杨东锫</div>
       <div className="hero-copy">
