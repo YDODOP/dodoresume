@@ -10,7 +10,7 @@ const nav = [['简介', 'about'], ['项目', 'work'], ['实习', 'internship']]
 
 function useSpecularEdges() {
   useEffect(() => {
-    const selector = '.project-highlights, .project-stats, .internship-card, .internship-highlights > div, .carousel-photo, .miniapp-video'
+    const selector = '.section-title, .intro-layout, .education-line, .compact-projects .project, .project-highlights, .project-stats, .internship-card, .internship-highlights > div, .carousel-photo, .miniapp-video'
     const targets = [...document.querySelectorAll(selector)]
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!targets.length || reducedMotion) return undefined
