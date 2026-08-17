@@ -45,11 +45,11 @@ export const projects = [
     color: '#e99a50',
   },
   {
-    number: '03', type: '团队管理 · 2024—2025', title: '机器人足球队',
-    description: '负责 44 人足球机器人队的日常训练规划、梯队建设与团队协作，带队参加全国大学生五人制足球机器人赛事并获得全国第三名。',
+    number: '03', type: '团队管理 · 足球队经历 · 2024—2025', title: '重庆大学足球队',
+    description: '负责重庆大学足球队的日常训练规划、队员协作与赛事组织，参与重庆市大学生校园足球联赛并在总决赛取得第五名。',
     images: [
-      'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1000&q=84',
-      'https://images.unsplash.com/photo-1561144257-e32e8efc6c4f?auto=format&fit=crop&w=1000&q=84',
+      imagePath('football-team-01.jpg'),
+      imagePath('football-team-02.jpg'),
     ],
     color: '#ff2fab',
   },
