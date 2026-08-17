@@ -322,7 +322,7 @@
 .compact-hero .hero-character:after{display:block;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent 34%,rgba(227,25,76,.18) 100%);mix-blend-mode:screen}
 @media(max-width:900px){.compact-hero .hero-character{top:72px;right:auto;bottom:auto;left:50%;transform:translateX(-50%);height:auto;width:min(88vw,680px);max-width:none;aspect-ratio:5 / 4}}
 @media(max-width:520px){.compact-hero .hero-character{top:68px;height:auto;width:90vw;max-width:none;aspect-ratio:5 / 4}}
-.desktop-view-note{position:absolute;right:max(152px,calc((100vw - 1700px)/2 + 132px));color:#8e7b8a;font-size:9px;letter-spacing:1px;white-space:nowrap}
+.desktop-view-note{position:absolute;right:max(152px,calc((100vw - 1700px)/2 + 132px));color:#c9b7c6;font-size:11px;font-weight:600;letter-spacing:.25px;line-height:1;white-space:nowrap}
 @media(max-width:1100px){.desktop-view-note{display:none}}
 
 /* Keep the portrait and introduction in one responsive composition. */

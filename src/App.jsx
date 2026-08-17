@@ -81,7 +81,7 @@ function Header() {
     <nav className="nav fixed-nav">
       {nav.map(([label, id]) => <a className={activeSection === id ? 'active' : ''} aria-current={activeSection === id ? 'page' : undefined} key={id} href={`#${id}`}>{label}</a>)}
     </nav>
-    <span className="desktop-view-note">电脑端浏览体验更佳</span>
+    <span className="desktop-view-note">建议使用电脑端浏览</span>
     <SpecularButton className="nav-contact" onClick={copyEmail} data-email={profile.email} aria-label={`复制邮箱：${profile.email}`} radius={999} tint="#d41432" tintOpacity={0.86} blur={14} lineColor="#ffffff" baseColor="#7428a8" intensity={1.45} shineSize={12} shineFade={42} thickness={1.2} proximity={220}><span className="nav-contact-text">联系我</span><ArrowUpRight size={17}/></SpecularButton>
   </header><div className={`copy-toast ${copied ? 'visible' : ''}`} role="status" aria-live="polite">已复制邮箱</div></>
 }
