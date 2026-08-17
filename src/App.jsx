@@ -168,7 +168,7 @@ function ProjectCarousel({ images, title }) {
       <div className="carousel-track">
         {images.map((image, index) => <figure className={`carousel-frame ${index === current ? 'is-current' : ''}`} key={image}>
           <div className="carousel-photo">
-            <img src={image} alt={`${title} 项目图 ${index + 1}`}/>
+            <img src={image} alt={`${title} 项目图 ${index + 1}`} loading={index === 0 ? 'eager' : 'lazy'} decoding="async"/>
           </div>
           <figcaption>
             <span>FRAME</span>
@@ -212,7 +212,7 @@ function App() {
       </div>
       <div className="hero-character">
         <div className="character-shadow"/>
-        <img src={`${import.meta.env.BASE_URL}images/hero-young.jpg`} alt="Young 的个人照片"/>
+        <img src={`${import.meta.env.BASE_URL}images/hero-young.jpg`} alt="Young 的个人照片" width="3648" height="2736" fetchPriority="high" decoding="async"/>
       </div>
       <div className="hero-resume-bar">
         <div><small>身份</small><strong>项目负责人 / 运营实习生</strong></div>
@@ -239,7 +239,7 @@ function App() {
           <div><small>{project.type}</small><h3>{project.title}</h3><p><HighlightedText text={project.description}/></p></div>
         </div>
         {project.highlights && <div className="project-highlights">{project.highlights.map(([title, text]) => <div key={title}><h4>{title}</h4><p><HighlightedText text={text}/></p></div>)}</div>}
-        {projectIndex === 0 ? <ProjectCarousel images={project.images} title={project.title}/> : projectIndex !== 1 && <div className="project-gallery">{project.images.map((image, index) => <img src={image} alt={`${project.title}项目图 ${index + 1}`} key={image}/>)}</div>}
+        {projectIndex === 0 ? <ProjectCarousel images={project.images} title={project.title}/> : projectIndex !== 1 && <div className="project-gallery">{project.images.map((image, index) => <img src={image} alt={`${project.title}项目图 ${index + 1}`} key={image} loading="lazy" decoding="async"/>)}</div>}
         {projectIndex === 1 && <div className="miniapp-archive"><div className="miniapp-video"><div className="miniapp-video-head"><span>05 / PRODUCT DEMO</span><b>交互演示片段</b><em>PLAY / PAUSE</em></div><div className="miniapp-video-stage"><video controls playsInline muted preload="metadata" src={`${import.meta.env.BASE_URL}media/miniapp-demo.mp4`} aria-label="足协赛事管理小程序交互演示"/></div><div className="miniapp-video-foot"><span>重庆大学学生足球协会 · 产品体验记录</span><span>WEB / MOBILE / 2025</span></div></div><div className="miniapp-archive-label"><span>06 / PRODUCT INTERFACE</span><strong>小程序产品界面档案</strong></div><ProjectCarousel images={miniAppImages} title="小程序产品界面"/></div>}
         {projectIndex === 0 && <div className="project-stats">{projectStats.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>}
       </article>)}</div>
