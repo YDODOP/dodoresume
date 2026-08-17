@@ -10,7 +10,7 @@ export const profile = {
 
 export const projectStats = [
   ['45人', '核心执行团队'],
-  ['9.5K', '项目资金支持'],
+  ['10k', '项目资金支持'],
   ['19支', '参赛队伍'],
   ['600+', '参与人数'],
 ]
@@ -35,7 +35,7 @@ export const projects = [
     color: '#f04b32',
   },
   {
-    number: '02', type: 'AICoding · 全栈开发 · 2025', title: '足协赛事管理小程序',
+    number: '02', type: 'Vibe Coding · 全栈开发 · 2025', title: '足协赛事管理小程序',
     description: '参考懂球帝 App 的赛事信息组织方式，立足“重庆大学校园足球生态”，围绕赛事运营场景进行本地化设计与开发。独立使用“Codex 辅助”完成产品设计、代码开发、问题排查与功能迭代， “独立打通”前端页面、后端服务与数据存储。',
     highlights: [
       ['AI 辅助全栈开发', '基于 AICoding 工作流，使用“Codex 辅助”推进产品设计、代码开发、问题排查与功能迭代，独立完成前端、后端及数据层的协同开发。'],
