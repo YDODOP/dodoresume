@@ -315,7 +315,7 @@
 @media(prefers-reduced-motion:reduce){.hero-video{display:none}.project-highlights:before,.project-stats:before,.internship-card:before,.internship-highlights>div:before,.carousel-photo:after,.miniapp-video:before,.header.fixed-header:before{--edge-alpha:.6;animation:none;background-position:50% 0;transition:none}}
 
 /* Keep the portrait inside a deliberate frame below the fixed navigation. */
-.compact-hero .hero-character{top:92px;bottom:auto;height:auto;aspect-ratio:3 / 5;width:min(34vw,460px);overflow:hidden;border:1px solid rgba(255,112,151,.42);border-radius:4px;filter:drop-shadow(14px 14px 0 rgba(0,0,0,.38))}
+.compact-hero .hero-character{top:92px;bottom:auto;height:auto;aspect-ratio:3 / 5;width:min(34vw,460px);overflow:hidden;border:2px solid rgba(255,91,137,.56);border-radius:50%;filter:drop-shadow(14px 14px 0 rgba(0,0,0,.38))}
 .compact-hero .hero-character:before,.compact-hero .hero-character img,.compact-hero .hero-character:after{clip-path:none;border-radius:inherit}
 .compact-hero .hero-character:before{inset:0;transform:none}
 .compact-hero .hero-character img{transform:none}
