@@ -315,8 +315,8 @@
 @media(prefers-reduced-motion:reduce){.hero-video{display:none}.project-highlights:before,.project-stats:before,.internship-card:before,.internship-highlights>div:before,.carousel-photo:after,.miniapp-video:before,.header.fixed-header:before{--edge-alpha:.6;animation:none;background-position:50% 0;transition:none}}
 
 /* Keep the portrait inside a deliberate frame below the fixed navigation. */
-.compact-hero .hero-character{top:92px;bottom:auto;height:auto;aspect-ratio:3 / 5;width:min(34vw,460px);overflow:hidden;border:2px solid rgba(255,91,137,.56);border-radius:50%;filter:drop-shadow(14px 14px 0 rgba(0,0,0,.38))}
-.compact-hero .hero-character:before,.compact-hero .hero-character img,.compact-hero .hero-character:after{clip-path:none;border-radius:inherit}
+.compact-hero .hero-character{top:92px;bottom:auto;height:auto;aspect-ratio:3 / 5;width:min(34vw,460px);overflow:hidden;border:0;border-radius:0;clip-path:polygon(12% 0,88% 0,100% 9%,94% 100%,6% 100%,0 9%);filter:drop-shadow(14px 14px 0 rgba(0,0,0,.38))}
+.compact-hero .hero-character:before,.compact-hero .hero-character img,.compact-hero .hero-character:after{clip-path:inherit;border-radius:0}
 .compact-hero .hero-character:before{inset:0;transform:none}
 .compact-hero .hero-character img{transform:none}
 .compact-hero .hero-character:after{display:block;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent 34%,rgba(227,25,76,.18) 100%);mix-blend-mode:screen}
