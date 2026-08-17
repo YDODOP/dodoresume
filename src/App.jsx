@@ -208,6 +208,7 @@ function App() {
       <div className="hero-glass" aria-hidden="true"/>
       <div className="speed-lines"/><div className="comic-dots"/>
       <div className="hero-name" aria-hidden="true">杨东锫</div>
+      <div className="hero-visual-stage">
       <div className="hero-copy">
         <p className="eyebrow"><span/> 个人作品集 · 2026</p>
         <h1>杨东锫</h1>
@@ -215,7 +216,8 @@ function App() {
       </div>
       <div className="hero-character">
         <div className="character-shadow"/>
-        <img src={`${import.meta.env.BASE_URL}images/hero-young.jpg`} alt="Young 的个人照片" width="3648" height="2736" fetchPriority="high" decoding="async"/>
+        <img src={`${import.meta.env.BASE_URL}images/hero-young.webp`} alt="Young 的个人照片" width="1247" height="1038" fetchPriority="high" decoding="async"/>
+      </div>
       </div>
       <div className="hero-resume-bar">
         <div><small>身份</small><strong>项目负责人 / 运营实习生</strong></div>
