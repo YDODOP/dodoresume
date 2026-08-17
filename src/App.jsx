@@ -198,7 +198,7 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
-  const internships = experiences.filter(item => item.category === 'internship')
+  const internships = experiences.filter(item => item.category === 'internship' || item.category === 'exchange')
 
   return <main id="top">
     <Header />
